@@ -2301,6 +2301,12 @@ static void syna_speedup_resume(struct work_struct *work)
 	tcm->pwr_state = PWR_ON;
 	tcm->under_water = false;
 
+	retval = syna_tcm_reset(tcm->tcm_dev);
+	if (retval < 0) {
+		LOGE("Fail to do sw reset\n");
+		goto exit;
+	}
+
 	LOGI("Prepare to set up application firmware\n");
 
 	/* set up app firmware */
